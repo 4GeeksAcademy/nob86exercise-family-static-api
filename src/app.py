@@ -54,7 +54,14 @@ def add_member():
     jackson_family.add_member(new_member)
     return jsonify({"msg": "Member added successfully"}), 200
 
-# @app.route('/member', methods=['DELETE'])  
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def delete_member(member_id):
+    result = jackson_family.delete_member(member_id)
+    if result:
+        return jsonify({"msg": "Member deleted successfully"}), 200
+    else:
+        return jsonify({"msg": "Member not found"}), 404
+  
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
