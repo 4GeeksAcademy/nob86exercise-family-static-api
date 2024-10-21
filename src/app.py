@@ -48,9 +48,17 @@ def handle_hello2(member_id):
 
 @app.route('/member', methods=['POST'])
 def add_member():
-    new_member = request_json()
-    if not new_member or 'first_name' not in new_member or 'age' not in new_member or 'lucky numbers' in new_member:
-        return jsonify({"msg": "first_name and age are required"}), 400
+    body = request.get_json()
+    # if not new_member or 'first_name' not in new_member or 'age' not in new_member or 'lucky numbers' in new_member:
+    #     return jsonify({"msg": "first_name and age are required"}), 400
+    id_member = jackson_family._generateId()
+    new_member = {
+        "id": id_member,
+        "first_name": body['first_name'],
+        "last_name": jackson_family.last_name
+        "age": body['age'],
+        "lucky numbers": body['lucky numbers'],      
+    }
     jackson_family.add_member(new_member)
     return jsonify({"msg": "Member added successfully"}), 200
 
